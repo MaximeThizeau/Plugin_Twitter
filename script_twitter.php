@@ -4,6 +4,7 @@ include('simple_html_dom.php');
 
 $currentUrl = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $url = "https://twitter.com/MaximeThizeau";
+$tweet_context = "";
 ?>
 
 <?php
@@ -22,9 +23,15 @@ $html = file_get_html($url);
 $first_tweet = $html->find(".GridTimeline .GridTimeline-items .Grid .Grid-cell .ProfileTweet", 0);
 echo $first_tweet;
 
-$profile_context = $first_tweet->find(".ProfileTweet-header .ProfileTweet-context", 0);
+$profile_context = $first_tweet->find(".ProfileTweet-header .ProfileTweet-context", 0)->plaintext;
 if(preg_match("#a Retweeté#", $profile_context))
-  echo "OK";
+  {
+    echo "C'est un retweet";
+    $tweet_context = "retweet";
+    $author = $first_tweet->find(".ProfileTweet-fullname", 0)->plaintext;
+    $link_author = $first_tweet->find(".ProfileTweet-screenname", 0)->plaintext;
+    $link_author = "//www.twitter.com/".trim(explode("@", $link_author)[1]);
+  }
 
 
 
@@ -34,7 +41,10 @@ if(preg_match("#a Retweeté#", $profile_context))
 <br><br><br> <h2> -------- Tweet : ---------</h2>
 
 <?php // On écrit le tweet découpé ici
-  echo utf8_decode($profile_context);
+  echo "Context : ".utf8_decode($profile_context) ."<br>";
+  echo "Author : ". utf8_decode($author) ."<br>";
+  echo "Link Author : ". utf8_decode($link_author) ."<br>";
+
 ?>
 
 
