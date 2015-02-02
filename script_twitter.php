@@ -23,13 +23,21 @@ $first_tweet = $html->find(".GridTimeline .GridTimeline-items .Grid .Grid-cell .
 echo $first_tweet;
 
 $profile_context = $first_tweet->find(".ProfileTweet-header .ProfileTweet-context", 0);
-if(preg_match("#à Retweeté#", $profile_context));
-echo "OK";
+if(preg_match("#a Retweeté#", $profile_context))
+  echo "OK";
 
 
 
 
 ?>
+
+<br><br><br> <h2> -------- Tweet : ---------</h2>
+
+<?php // On écrit le tweet découpé ici
+  echo utf8_decode($profile_context);
+?>
+
+
 
 <?php
 // redirectPage($currentUrl);
