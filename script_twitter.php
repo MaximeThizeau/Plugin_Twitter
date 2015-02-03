@@ -31,6 +31,7 @@ if(preg_match("#a Retweeté#", $profile_context))
     $author = $first_tweet->find(".ProfileTweet-fullname", 0)->plaintext;
     $link_author = $first_tweet->find(".ProfileTweet-screenname", 0)->plaintext;
     $link_author = "//www.twitter.com/".trim(explode("@", $link_author)[1]);
+    $date = $first_tweet->find(".js-short-timestamp", 0)->plaintext;
   }
 
 
@@ -44,6 +45,7 @@ if(preg_match("#a Retweeté#", $profile_context))
   echo "Context : ".utf8_decode($profile_context) ."<br>";
   echo "Author : ". utf8_decode($author) ."<br>";
   echo "Link Author : ". utf8_decode($link_author) ."<br>";
+  echo "Date : ". utf8_decode($date) ."<br>";
 
 ?>
 
