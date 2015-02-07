@@ -1,6 +1,8 @@
 
 
 <?php
+include_once("autoload.inc.php");
+
 set_time_limit(0);
 include('simple_html_dom.php');
 
@@ -60,6 +62,39 @@ if(preg_match("#a Retweeté#", $profile_context))
 
     $to_replace_with = "<a href=\"//www.twitter.com/".str_replace("@", "", $via_reply)."\">". $via_reply. "</a>";
     $content = str_replace($via_reply, $to_replace_with, $content);
+  }
+
+  if(preg_match("#a Retweeté#", $profile_context))
+  {
+    // echo "C'est un retweet";
+    // $tweet_context = "retweet";
+    // $author = $first_tweet->find(".ProfileTweet-fullname", 0)->plaintext;
+    // $link_author = $first_tweet->find(".ProfileTweet-screenname", 0)->plaintext;
+    // $link_author = "//www.twitter.com/".trim(explode("@", $link_author)[1]);
+    // $date = $first_tweet->find(".js-short-timestamp", 0)->plaintext;
+    // $content = $first_tweet->find(".ProfileTweet-contents .ProfileTweet-text",0);
+    // if($content->find(".twitter-timeline-link"))
+    // {
+    //   foreach($content->find(".twitter-timeline-link") as $link)
+    //   {
+    //     $link->find("span.tco-ellipsis", 0)->outertext=""; // Remove useless div and hidden informations that we don't want
+    //     $link_array[] = str_replace(" ", "", str_replace("&nbsp;", "", $link->plaintext)); // Removing space from link
+    //   }
+    // }
+    //
+    // $twitter_atreply = $content->find(".twitter-atreply", 0);
+    // $via_reply = trim($twitter_atreply->plaintext);
+    //
+    // $content = $content->plaintext; // Writing tweet content with good style
+    //
+    // foreach($link_array as $link)
+    // {
+    //   $to_replace_with = "<a href=\"" .$link ."\">".$link."</a>";
+    //   $content = str_replace(trim(str_replace("http://", "http:// ", $link)), $to_replace_with, $content);
+    // }
+    //
+    // $to_replace_with = "<a href=\"//www.twitter.com/".str_replace("@", "", $via_reply)."\">". $via_reply. "</a>";
+    // $content = str_replace($via_reply, $to_replace_with, $content);
   }
 
 
