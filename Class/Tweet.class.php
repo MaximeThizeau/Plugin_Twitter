@@ -10,8 +10,9 @@ class Tweet{
   private $date = "";
   private $link_array = Array();
   private $author = "";
+  private $author_login = "";
   private $HTML_code;
-  private $at_reply = "";
+  private $at_reply = Array();
   private $position;
   private $content = "";
 
@@ -43,9 +44,9 @@ class Tweet{
 
   public function recordAtReply()
   {
-      if($twitter_atreply = $this->HTML_code->find(".twitter-atreply", 0))
+      foreach($this->HTML_code->find(".twitter-atreply") as $twitter_atreply)
       {
-        $this->at_reply = $twitter_atreply->plaintext;
+        $this->at_reply[] = $twitter_atreply->plaintext;
       }
   }
 
@@ -73,10 +74,17 @@ class Tweet{
       $content = str_replace(trim(str_replace("http://", "http:// ", $link)), $to_replace_with, $content);
     }
 
-    $to_replace_with = "<a href=\"//www.twitter.com/".str_replace("@", "", $this->at_reply)."\">". $this->at_reply. "</a>";
-    $content = str_replace($this->at_reply, $to_replace_with, $content);
-
+    foreach($this->at_reply as $reply)
+    {
+      $to_replace_with = "<a href=\"//www.twitter.com/".str_replace("@", "", $reply)."\">". $reply. "</a>";
+      $content = str_replace($reply, $to_replace_with, $content);
+    }
     $this->content = $content;
+  }
+
+  public function recordAuthor_login()
+  {
+    $this->author_login = str_replace(" ", "", $this->HTML_code->find(".ProfileTweet-screenname", 0)->plaintext);
   }
 
   public function recordAll()
@@ -86,6 +94,7 @@ class Tweet{
     $this->recordAtReply();
     $this->recordLinks();
     $this->recordContent();
+    $this->recordAuthor_login();
   }
 
   //Accesseurs / Getters
@@ -97,6 +106,7 @@ class Tweet{
   public function getAt_reply() { return $this->at_reply; }
   public function getPosition() { return $this->position; }
   public function getContent() { return $this->content; }
+  public function getAuthor_login() { return $this->author_login; }
 
   // Mutateurs / Setters
   public function setLink_array($link_array) {  $this->link_array = $link_array ;}
