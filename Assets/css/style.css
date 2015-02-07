@@ -1,0 +1,27 @@
+body, html
+{
+  margin : 0px;
+  font-family : "Arial";
+}
+
+.tweet
+{
+  display : inline-block;
+  width : 300px;
+  padding : 5px;
+  margin : 5px;
+  background-color : white;
+  border : 3px solid #09003f;
+  vertical-align : top;
+}
+
+.tweet .tweet-header
+{
+  background-color : #09003f;
+  color : white;
+}
+
+.tweet .tweet-header span
+{
+
+}
